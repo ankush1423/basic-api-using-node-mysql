@@ -52,11 +52,55 @@ export const deleteEmployeeData = async(req,res) => {
         {
             return res.send("there is no employee with this id")
         }
-        
+
         return res.send("employee deleted SuccessFully")
      }
      catch(err)
      {
         console.log("ERROR WHILE DELETING THE EMPLOYEE DATA : ",err)
      }
+}
+
+export const createEmployee = async(req,res) => {
+    try
+    {  
+       const {name , employee_code , salary} = req.body
+       const _id = 0;
+
+       if(!name || !employee_code || !salary)
+       {
+          return res.send("all the informations are required")
+       }
+
+       await mySqlPool.query(`CALL update_employee(?,?,?,?)`,[_id,name,employee_code,salary])
+
+       return res.send("EMPLOYEE CREATED SUCCESSFULLY")
+    }
+    catch(err)
+    {
+        console.log("ERROR WHILE UPDATE THE EMPLOYEE ",err)
+    }
+}
+
+export const updateEmployee = async(req,res) => {
+    try
+    {
+        
+        const {employeeId} = req.params
+        const {name,employee_code,salary} = req.body
+
+        if(!employeeId || !name || !employee_code || !salary)
+        {
+            return res.send("all feilds are mandatry")
+        }
+
+        await mySqlPool.query("CALL update_employee(?,?,?,?) ",[employeeId,name,employee_code,salary])
+
+        return res.status(200).send("EMPLOYEE DATA UPDATED SUCCESSFULLLY")
+
+    }
+    catch(err)
+    {
+        console.log("ERROR WHILE UPDATING THE EMPLOYEE  ",err)
+    }
 }
