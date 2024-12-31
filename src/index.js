@@ -1,6 +1,5 @@
-import { app } from "./app";
-import { mySqlPool } from "./db/database";
-
+import { app } from "./app.js";
+import { mySqlPool } from "./db/database.js";
 
 
 

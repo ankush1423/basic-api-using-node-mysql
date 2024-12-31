@@ -1,11 +1,15 @@
-import express from "express"
-
-const router  = express.Router();
-
-router.get('/',(req,res) => {
-     res.send("list of employee")
-})
+import { mySqlPool } from "../db/database.js";
 
 
+export const getAllEmployees = async (req,res) => {
+    try
+    {
+        const [rows] = await mySqlPool.query("SELECT * FROM employees")
+        res.send(rows)
+    }
+    catch(err)
+    {
+        console.log("ERROR WHILE GETTING THE DATA ",err)
+    }
+}
 
-export default router;
